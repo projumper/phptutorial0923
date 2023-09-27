@@ -4,9 +4,11 @@ class Girokonto extends Bankkonto
 {
 
 
-    function __construct()
+    function __construct($surename, $firstname)
     {
         $this->name = "Girokonto";
+        $this->firstname = $firstname;
+        $this->surename = $surename;
     }
 
     public function einzahlung($betrag)

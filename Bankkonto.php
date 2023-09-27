@@ -4,16 +4,19 @@ abstract class Bankkonto
 {
     
 public $name;
+
+public $firstname;
+
+public $surename;
 public $kntnr;
 private $credit ;
 
 
 
 public function getCredit()
-    {
-        return $this->credit;
-    }
-
+{
+    return $this->credit;
+}
 
 
 public function buchung($betrag, $art)
