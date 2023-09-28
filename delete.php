@@ -16,8 +16,10 @@ include('functions.php');
 
 $conn = createMySQLConnection();
 
-if(isset($_POST["email"]))
-    $res = $conn->query("INSERT INTO accounts (id, firstname, surename, email, girokonto_id, sparbuch_id) VALUES (NULL, '".$_POST['firstname']."', '".$_POST['surename']."', '".$_POST['email']."', NULL, NULL)");
+if(isset($_POST["delete_id"]))
+    $res = $conn->query("DELETE FROM accounts WHERE accounts.id =".$_POST["delete_id"]);
+
+$res1 = $conn->query("SELECT * FROM accounts");
 
 ?>
 
@@ -25,16 +27,19 @@ if(isset($_POST["email"]))
     <head>
     </head>
     <body>
-        <p><h1>Kunden anlegen</h1></p>
-        <form action="create.php" method="POST">
-            <input type="text" value="0" name="firstname"/>
-            <input type="text" value="0" name="surename"/>
-            <input type="text" value="0" name="email"/>
-            <input type="submit" value="Erstellen"/>
+        <p><h1>Kunden löschen</h1></p>
+        <ul>
+        <?php
+        while ($row = $res1->fetch_assoc())
+            echo "<li>".$row["id"]."-".$row["firstname"]."-".$row["surename"]."</li>"
+        ?>
+        </ul>
+
+        <form action="delete.php" method="POST">
+            <input type="text" value="0" name="delete_id"/>
+            <input type="submit" value="Löschen"/>
         </form>
+
+
     </body>
 </html>
-<?php
-//verbinde dich mit einer DB und speichere denaktuelen Kontostand
-
-?>

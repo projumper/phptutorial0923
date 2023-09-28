@@ -3,6 +3,8 @@
 include('Bankkonto.php');
 include('Girokonto.php');
 include('Sparbuch.php');
+include('functions.php');
+
 
 //verbinde dich mit einer Datenbank und hole den Kontostand
 /*
@@ -12,18 +14,6 @@ include('Sparbuch.php');
 4. bekommen wir eine resource $res
 5. verarbeiten wir die Ergebnisse der Datenbankabfrage while ($row = $res->fetch_array()){var_dump($row);}
 */
-
-$serverName='localhost';
-$userName='root';
-$password='';
-
-$conn=mysqli_connect($serverName,$userName,$password);
-if(!$conn)
-{
-    die('There is problem connection'.mysqli_connect_error());
-}
-
-$conn->select_db("bankomat");
 
 //SELECT * FROM accounts;
 //SELECT * FROM accounts WHERE account_nr = 123
@@ -35,6 +25,7 @@ $conn->select_db("bankomat");
 //SELECT acc.id, acc.name FROM accounts as acc WHERE acc.id=1;
 //SELECT SUMME(credit) FROM accounts WHERE credit > 1000000;
 
+$conn = createMySQLConnection();
 
 $res = $conn->query("SELECT * FROM accounts as acc, girokonten as gc WHERE acc.girokonto_id = gc.id AND acc.id = 1");
 
