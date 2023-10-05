@@ -16,30 +16,18 @@ include('functions.php');
 
 $conn = createMySQLConnection();
 
-if(isset($_POST["delete_id"]))
-    $res = $conn->query("DELETE FROM accounts WHERE accounts.id =".$_POST["delete_id"]);
+if($_POST["save"] == "Senden")
+{
+    foreach ($_POST as $key => $value) {
 
-$res1 = $conn->query("SELECT * FROM accounts");
+        if ($key == "save") continue;
+        
+       $res = $conn->query("DELETE FROM accounts WHERE accounts.id =".$key);
+
+    }
+}
+
+
+header("Location: bankmanagement.php");
 
 ?>
-
-<html>
-    <head>
-    </head>
-    <body>
-        <p><h1>Kunden löschen</h1></p>
-        <ul>
-        <?php
-        while ($row = $res1->fetch_assoc())
-            echo "<li>".$row["id"]."-".$row["firstname"]."-".$row["surename"]."</li>"
-        ?>
-        </ul>
-
-        <form action="delete.php" method="POST">
-            <input type="text" value="0" name="delete_id"/>
-            <input type="submit" value="Löschen"/>
-        </form>
-
-
-    </body>
-</html>
