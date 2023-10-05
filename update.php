@@ -13,9 +13,50 @@ include('functions.php');
 4. bekommen wir eine resource $res
 5. verarbeiten wir die Ergebnisse der Datenbankabfrage while ($row = $res->fetch_array()){var_dump($row);}
 */
+var_dump($_POST);
 
 $conn = createMySQLConnection();
 
-$res = $conn->query("UPDATE accounts (id, firstname, surename, email, girokonto_id, sparbuch_id) VALUES (NULL, '".$_POST['firstname']."', '".$_POST['surename']."', '".$_POST['email']."', NULL, NULL)");
+if($_POST['send'])
+{
+    $firstname = $_POST['firstname'];
+    $surename = $_POST['surename'];
+    $email = $_POST['email'];
+    $id = $_POST['id'];
+    
+    $conn->query("UPDATE accounts SET firstname='$firstname', surename='$surename', email='$email' WHERE id='$id'");
+
+    header("Location: bankmanagement.php");
+}
+
+$id = $_GET['id'];
+
+if (isset($id))
+{
+
+    $res = $conn->query('SELECT * FROM accounts WHERE id='.$id);
+
+    if(!$data=$res->fetch_assoc())
+    {
+        die("die ID ist falsch ");
+    }
+}
+//
 
 ?>
+
+<html>
+    <head>
+    </head>
+    <body>
+        <p><h1>Kunden bearbeiten</h1></p>
+        <form action="update.php" method="POST">
+            <input type="text" value="<?php echo $data['firstname'] ?>" name="firstname"/>
+            <input type="text" value="<?php echo $data['surename'] ?>" name="surename"/>
+            <input type="text" value="<?php echo $data['email'] ?>" name="email"/>
+            <input type="hidden" value="send" name="send"/>
+            <input type="hidden" value="<?php echo $data['id'] ?>" name="id"/>
+            <input type="submit" value="Bearbeiten"/>
+        </form>
+    </body>
+</html>

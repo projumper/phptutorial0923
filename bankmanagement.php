@@ -6,6 +6,17 @@ spl_autoload_register(function ($class_name) {
     include $class_name . '.php';
 });
 
+
+echo "str".$var."ing";
+echo 'str'.$var.'ing';
+echo 'str'.$var."ing";
+
+echo '<a href="test.php" > test </a>'       ;
+echo "<a href=\"test.php\" > test </a>"       ;
+echo "<a href=\'test.php\' > test </a>"       ;
+
+
+
 $conn = createMySQLConnection();
 
 $res = $conn->query("SELECT * FROM accounts");
@@ -18,7 +29,7 @@ $res = $conn->query("SELECT * FROM accounts");
         
         <?php //var_dump($accountData); ?>
         <form action="delete.php" method="post">
-        <table border ="1">
+        <table border = "1">
             <tr>
                 <td>Auswahl</td>
                 <td>id</td>
@@ -42,7 +53,7 @@ $res = $conn->query("SELECT * FROM accounts");
                 echo "<td>".$row['email']."</td>";
                 echo "<td>".$row['girokonto_id']."</td>";
                 echo "<td>".$row['sparbuch_id']."</td>";
-                echo "<td> Bearbeiten</td>";
+                echo '<td> <a href="update.php?id='.$row['id'].'">Bearbeiten</a></td>';
                 echo "</tr>";
             }           
             ?>
